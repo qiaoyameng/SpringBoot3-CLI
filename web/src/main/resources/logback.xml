@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="10 seconds">
-    <!--
-    scope="context": 表示从 Spring 上下文中读取属性值。
-    使用时所用的名称 ${contextName}
-    source: 指定从 Spring 应用程序配置文件中读取的属性源。
-    defaultValue (可选): 如果 Spring 上下文中找不到指定的属性，则使用默认值。
-    -->
-    <springProperty scope="context" name="contextName" source="spring.application.name"/>
-
-    <!-- 设置日志上下文名称 -->
-    <contextName>${contextName}</contextName>
-
     <!-- 定义日志输出路径 -->
     <property name="log.path" value="logs"/>
 
