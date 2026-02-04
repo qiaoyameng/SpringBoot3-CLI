@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rosy.main.mapper.AudienceRecordMapper">
+
+    <select id="selectRetentionData" resultType="java.util.Map">
+        SELECT
+            TIMESTAMPDIFF(MINUTE, join_time, leave_time) as time_interval,
+            COUNT(*) as user_count
+        FROM audience_record
+        WHERE live_room_id = #{liveRoomId} AND is_deleted = 0
+        GROUP BY time_interval
+        ORDER BY time_interval ASC
+    </select>
+
+    <select id="selectConversionRate" resultType="java.lang.Double">
+        SELECT
+            IFNULL(
+                (SELECT COUNT(DISTINCT user_id) FROM audience_record
+                 WHERE live_room_id = #{liveRoomId} AND is_converted = 1 AND is_deleted = 0) /
+                NULLIF((SELECT COUNT(DISTINCT user_id) FROM audience_record
+                        WHERE live_room_id = #{liveRoomId} AND is_deleted = 0), 0) * 100,
+                0
+            )
+    </select>
+
+    <select id="selectTotalAudiences" resultType="java.lang.Integer">
+        SELECT COUNT(DISTINCT user_id) FROM audience_record
+        WHERE live_room_id = #{liveRoomId} AND is_deleted = 0
+    </select>
+
+</mapper>

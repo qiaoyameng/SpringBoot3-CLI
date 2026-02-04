@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rosy.main.mapper.ViewersStatsMinuteMapper">
+
+    <select id="selectByLiveRoomId" resultType="com.rosy.main.domain.entity.ViewersStatsMinute">
+        SELECT * FROM viewers_stats_minute
+        WHERE live_room_id = #{liveRoomId} AND is_deleted = 0
+        ORDER BY stats_time ASC
+    </select>
+
+</mapper>
